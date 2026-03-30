@@ -11,6 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install OpenShift CLI
+      uses: redhat-actions/oc-installer@v1
+
+    - name: Connect to OpenShift
+      run: oc login --token=${{ secrets.OKD_TOKEN }} --server=https://api.openshift.kakor.ovh:6443 --insecure-skip-tls-verify=true
+
+      
     - uses: actions/checkout@v4
 
     - name: Build and Push Docker image
@@ -18,9 +25,3 @@ jobs:
         IMAGE="harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)"
         docker build . --file Dockerfile --tag $IMAGE
         docker push $IMAGE
-
-    - name: Install OpenShift CLI
-      uses: redhat-actions/oc-installer@v1
-
-    - name: Connect to OpenShift
-      run: oc login --token=${{ secrets.OKD_TOKEN }} --server=https://api.openshift.kakor.ovh:6443 --insecure-skip-tls-verify=true
