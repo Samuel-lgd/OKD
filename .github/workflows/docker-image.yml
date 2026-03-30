@@ -21,6 +21,6 @@ jobs:
 
     - name: Build and Push Docker image
       run: |
-        IMAGE="harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)"
+        IMAGE="harbor.kakor.ovh/ipim2il/groupe-6-samuel-alexandre:$(date +%s)"
         docker build . --file Dockerfile --tag $IMAGE
         docker push $IMAGE
