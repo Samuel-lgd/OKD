@@ -15,7 +15,7 @@ jobs:
       uses: redhat-actions/oc-installer@v1
 
     - name: Connect
-      run: oc login --token=${{ secrets.OKD_TOKEN }} --server=https://api.openshift.kakor.ovh:6443
+      run: oc login --token=${{ secrets.OKD_TOKEN }} --server=https://api.openshift.kakor.ovh:6443 --insecure-skip-tls-verify=true
 
     - uses: actions/checkout@v4
 
