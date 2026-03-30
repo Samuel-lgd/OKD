@@ -17,7 +17,7 @@ jobs:
       run: |
         IMAGE="harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)"
         docker build . --file Dockerfile --tag $IMAGE
-        docker login harbor.kakor.ovh -u ipi-gp-6 -p "${{ secrets.HARBOR_PASSWORD }}"
+        docker login harbor.kakor.ovh -u ipi-gp-6 -p B4teau123!
         docker push $IMAGE
 
     - name: Install OpenShift CLI
