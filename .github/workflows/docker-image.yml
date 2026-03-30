@@ -14,3 +14,15 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)
+
+    - name: Install OpenShift CLI
+      run: |
+        curl -LO "https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/openshift-client-linux.tar.gz"
+        tar -xzf openshift-client-linux.tar.gz
+        sudo mv oc kubectl /usr/local/bin/
+
+    - name: Login to OKD
+      env:
+        OKD_TOKEN: ${{ secrets.OKD_TOKEN }}
+      run: |
+        oc login --token=$OKD_TOKEN --server=https://api.openshift.kakor.ovh:6443
