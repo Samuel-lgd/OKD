@@ -12,17 +12,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)
+
+    - name: Build and Push Docker image
+      run: |
+        IMAGE="harbor.kakor.ovh/ipim2il/groupe-6/samuel-alexandre:$(date +%s)"
+        docker build . --file Dockerfile --tag $IMAGE
+        docker push $IMAGE
 
     - name: Install OpenShift CLI
-      run: |
-        curl -LO "https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/openshift-client-linux.tar.gz"
-        tar -xzf openshift-client-linux.tar.gz
-        sudo mv oc kubectl /usr/local/bin/
+      uses: redhat-actions/oc-installer@v1
 
-    - name: Login to OKD
-      env:
-        OKD_TOKEN: ${{ secrets.OKD_TOKEN }}
-      run: |
-        oc login --token=$OKD_TOKEN --server=https://api.openshift.kakor.ovh:6443
+    - name: Connect to OpenShift
+      run: oc login --token=${{ secrets.OKD_TOKEN }} --server=https://api.openshift.kakor.ovh:6443 --insecure-skip-tls-verify=true
